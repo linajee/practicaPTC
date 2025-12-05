@@ -77,96 +77,25 @@ def generar_estilo_css():
         f.write(contenido_css)
 
 
-def formatear_numero(numero, decimales=2):
-    """
-    Formatea un número al estilo español
 
-    Parametros:
-        numero (float): Número a formatear
-        decimales (int): Número de decimales
+def CrearCabecera(variacion_absoluta, variacion_relativa):
+    cabecera = "<tr>"
+    cabecera += '<th rowspan="2">Provincia</th>'
+    cabecera += f'<th colspan="{variacion_absoluta.shape[1]}" class="group-header">Variación absoluta</th>'
+    cabecera += f'<th colspan="{variacion_relativa.shape[1]}" class="group-header">Variación relativa</th>'
+    cabecera += "</tr>"
 
-    Retorna:
-        str: Número formateado  
-    """
-    # Formateamos primero con el estándar inglés (coma para miles, punto para decimales)
-    formato = f"{{:,.{decimales}f}}"
-    s = formato.format(numero)
-    
-    # Reemplazamos temporalmente la coma por un marcador, el punto por coma, y el marcador por punto
-    s = s.replace(",", "X").replace(".", ",").replace("X", ".")
-    return s
-
-
-def generar_tabla_html(provincias, variacion_absoluta, variacion_relativa):
-    """
-    Genera una tabla HTML con la variación absoluta y relativa de la población por provincias
-
-    Parámetros:
-        provincias (numpy.ndarray): Array con las provincias
-        variacion_absoluta (numpy.ndarray): Array con la variación absoluta de la población por provincias
-        variacion_relativa (numpy.ndarray): Array con la variación relativa de la población por provincias
-
-    Retorna:
-        None
-    """
-    generar_estilo_css()
-    
-    # Años correspondientes a las columnas de variación (2017 a 2011)
-    anos = list(range(2017, 2010, -1))
-    num_anos = len(anos)
-    
-    # Construcción del contenido HTML usando concatenación de strings
-    paginaHTML = """<!DOCTYPE html><html>
-<head><title>Tabla de Variación de Población</title>
-<link rel="stylesheet" href="estilo.css">
-<meta charset="utf8"></head>
-<body>
-<h1>Variación de Población por Provincias (2011-2017)</h1>
-<table>
-"""
-    
-    # Fila 1: Cabeceras Agrupadas
-    paginaHTML += "<tr>"
-    paginaHTML += '<th rowspan="2">Provincia</th>'
-    paginaHTML += f'<th colspan="{num_anos}" class="group-header">Variación absoluta</th>'
-    paginaHTML += f'<th colspan="{num_anos}" class="group-header">Variación relativa</th>'
-    paginaHTML += "</tr>"
-    
     # Fila 2: Años individuales
-    paginaHTML += "<tr>"
+    cabecera += "<tr>"
     # Años para Variación Absoluta
-    for ano in anos:
-        paginaHTML += f"<th>{ano}</th>"
+    for ano in range(2017, 2010, -1):
+        cabecera += f"<th>{ano}</th>"
     # Años para Variación Relativa
-    for ano in anos:
-        paginaHTML += f"<th>{ano}</th>"
-    paginaHTML += "</tr>"
-    
-    # Filas de datos
-    num_provincias = len(provincias)
-    
-    for i in range(num_provincias):
-        paginaHTML += "<tr>"
-        paginaHTML += f"<td style='text-align: left;'>{provincias[i]}</td>"
-        
-        # Datos Variación Absoluta
-        for j in range(num_anos):
-            valor = variacion_absoluta[i, j]
-            paginaHTML += f"<td>{formatear_numero(valor, 2)}</td>"
-        
-        # Datos Variación Relativa
-        for j in range(num_anos):
-            valor = variacion_relativa[i, j]
-            paginaHTML += f"<td>{formatear_numero(valor, 2)}</td>"
-            
-        paginaHTML += "</tr>"
-        
-    paginaHTML += "</table></body></html>"
-    
-    # Escritura en fichero
-    with open("./resultados/variacionProvincias.html", "w", encoding="utf8") as archivo:
-        archivo.write(paginaHTML)
+    for ano in range(2017, 2010, -1):
+        cabecera += f"<th>{ano}</th>"
+    cabecera += "</tr>"
 
+    return cabecera 
 
 def R1():
     """
@@ -178,10 +107,27 @@ def R1():
     Retorna:
         None
     """
+
+    generar_estilo_css()
     ruta_csv = "./entradas/poblacionProvinciasHM2010-17.csv"
-    provincias, poblacion_total, poblacion_hombres, poblacion_mujeres = func.LeerPoblacionProvincias(ruta_csv)
+    provincias, poblacion_total, _ , _ = func.LeerPoblacionProvincias(ruta_csv)
     
     variacion_absoluta = calcular_variacion_absoluta(poblacion_total)
     variacion_relativa = calcular_variacion_relativa(poblacion_total, variacion_absoluta)
+
+    datos = np.hstack((provincias.reshape(-1,1), variacion_absoluta, variacion_relativa))
+
+    cabecera =  CrearCabecera(variacion_absoluta, variacion_relativa)
     
-    generar_tabla_html(provincias, variacion_absoluta, variacion_relativa)
+    func.GenerarHtml(
+        titulo="Variación de Población por Provincias (2011-2017)",
+        cabecera=cabecera,
+        datos=datos,
+        salida="./resultados/variacionProvincias.html"
+    )
+    print("Página HTML generada en './resultados/variacionProvincias.html'")
+        
+
+
+R1()
+    
