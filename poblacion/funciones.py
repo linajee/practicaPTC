@@ -74,7 +74,7 @@ def GenerarHtml(titulo, cabecera, datos, salida):
     
     for i in range(datos.shape[0]):
         paginaHTML += "<tr>"
-        paginaHTML += f"<td style='text-align: left;'>{datos[i][0]}</td>"
+        paginaHTML += f"<td style='width:100px;'>{datos[i][0]}</td>"
         
         for j in range(1,datos.shape[1]):
             valor = datos[i][j]
@@ -128,10 +128,12 @@ def GenerarEstiloCss():
         None
     """
     contenido_css = """
+
     table {
         border-collapse: collapse;
         width: 100%;
         font-family: Arial, Helvetica, sans-serif;
+
     }
     th, td {
         border: 1px solid black;
@@ -146,6 +148,12 @@ def GenerarEstiloCss():
     /* Estilo para las cabeceras agrupadas */
     th.group-header {
         background-color: #f2f2f2;
+    }
+    table th:first-child,
+    table td:first-child {
+        text-align: center;
+        width: 100px;
+        white-space: nowrap;
     }
     """
     with open("./resultados/estilo.css", "w", encoding="utf8") as f:
