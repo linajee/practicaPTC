@@ -10,7 +10,7 @@ import numpy as np
 import funciones as func
 
 
-def calcular_variacion_absoluta(poblacion_total):
+def CalcularVariacionAbsoluta(poblacion_total):
     """
     Calcula la variación absoluta de la población por provincias
 
@@ -26,7 +26,7 @@ def calcular_variacion_absoluta(poblacion_total):
     return poblacion_total[:, :-1] - poblacion_total[:, 1:]
 
 
-def calcular_variacion_relativa(poblacion_total, variacion_absoluta):
+def CalcularVariacionRelativa(poblacion_total, variacion_absoluta):
     """
     Calcula la variación relativa de la población por provincias
 
@@ -42,39 +42,7 @@ def calcular_variacion_relativa(poblacion_total, variacion_absoluta):
     return variacion_absoluta / poblacion_total[:, 1:] * 100
 
 
-def generar_estilo_css():
-    """
-    Genera el archivo CSS para la tabla.
-    
-    Parametros:
-        None
-    
-    Retorna:
-        None
-    """
-    contenido_css = """
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-        font-size: 12px;
-    }
-    th {
-        background-color: #ffffff;
-        font-weight: bold;
-    }
-    /* Estilo para las cabeceras agrupadas */
-    th.group-header {
-        background-color: #f2f2f2;
-    }
-    """
-    with open("./resultados/estilo.css", "w", encoding="utf8") as f:
-        f.write(contenido_css)
+
 
 
 
@@ -108,12 +76,12 @@ def R1():
         None
     """
 
-    generar_estilo_css()
+    func.GenerarEstiloCss()
     ruta_csv = "./entradas/poblacionProvinciasHM2010-17.csv"
     provincias, poblacion_total, _ , _ = func.LeerPoblacionProvincias(ruta_csv)
     
-    variacion_absoluta = calcular_variacion_absoluta(poblacion_total)
-    variacion_relativa = calcular_variacion_relativa(poblacion_total, variacion_absoluta)
+    variacion_absoluta = CalcularVariacionAbsoluta(poblacion_total)
+    variacion_relativa = CalcularVariacionRelativa(poblacion_total, variacion_absoluta)
 
     datos = np.hstack((provincias.reshape(-1,1), variacion_absoluta, variacion_relativa))
 
@@ -127,7 +95,3 @@ def R1():
     )
     print("Página HTML generada en './resultados/variacionProvincias.html'")
         
-
-
-R1()
-    

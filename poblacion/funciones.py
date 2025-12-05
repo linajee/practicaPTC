@@ -1,5 +1,9 @@
 import csv, numpy as np
-
+import urllib.request
+from bs4 import BeautifulSoup
+import certifi
+import ssl
+from lxml import html
 def LectorCsv(ruta, delimitador : str, ini : str, fin : str): 
 
   if len(delimitador) !=1:
@@ -112,3 +116,54 @@ def formatear_numero(numero, decimales=2):
       return s
     except:
       return numero
+    
+def GenerarEstiloCss():
+    """
+    Genera el archivo CSS para la tabla.
+    
+    Parametros:
+        None
+    
+    Retorna:
+        None
+    """
+    contenido_css = """
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+        font-size: 12px;
+    }
+    th {
+        background-color: #ffffff;
+        font-weight: bold;
+    }
+    /* Estilo para las cabeceras agrupadas */
+    th.group-header {
+        background-color: #f2f2f2;
+    }
+    """
+    with open("./resultados/estilo.css", "w", encoding="utf8") as f:
+        f.write(contenido_css)
+
+
+def LeerPaginaWeb(fichero):      
+    archivo = open(fichero, 'r', encoding="utf8")
+    comString = archivo.read()
+    archivo.close()
+
+    # --- Usando BeautifulSoup ---
+    soup = BeautifulSoup(comString, 'html.parser')
+
+    # Leer TD
+    td_soup = soup.find_all('td')
+    celdas = [td.get_text() for td in td_soup]
+
+
+    # Puedes elegir qué devolver:
+    return celdas
