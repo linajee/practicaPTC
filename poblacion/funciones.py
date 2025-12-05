@@ -1,9 +1,6 @@
 import csv, numpy as np
-import urllib.request
 from bs4 import BeautifulSoup
-import certifi
-import ssl
-from lxml import html
+
 def LectorCsv(ruta, delimitador : str, ini : str, fin : str): 
 
   if len(delimitador) !=1:
