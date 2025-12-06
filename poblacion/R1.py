@@ -42,10 +42,6 @@ def CalcularVariacionRelativa(poblacion_total, variacion_absoluta):
     return variacion_absoluta / poblacion_total[:, 1:] * 100
 
 
-
-
-
-
 def CrearCabecera(variacion_absoluta, variacion_relativa):
     cabecera = "<tr>"
     cabecera += '<th rowspan="2">Provincia</th>'
@@ -53,17 +49,16 @@ def CrearCabecera(variacion_absoluta, variacion_relativa):
     cabecera += f'<th colspan="{variacion_relativa.shape[1]}" class="group-header">Variación relativa</th>'
     cabecera += "</tr>"
 
-    # Fila 2: Años individuales
     cabecera += "<tr>"
-    # Años para Variación Absoluta
-    for ano in range(2017, 2010, -1):
-        cabecera += f"<th>{ano}</th>"
-    # Años para Variación Relativa
-    for ano in range(2017, 2010, -1):
-        cabecera += f"<th>{ano}</th>"
+
+    celdas_ano = "".join(f"<th>{ano}</th>" for ano in range(2017, 2010, -1))
+    cabecera += celdas_ano
+    cabecera += celdas_ano
+
     cabecera += "</tr>"
 
     return cabecera 
+
 
 def R1():
     """
@@ -75,8 +70,8 @@ def R1():
     Retorna:
         None
     """
-
     func.GenerarEstiloCss()
+    
     ruta_csv = "./entradas/poblacionProvinciasHM2010-17.csv"
     provincias, poblacion_total, _ , _ = func.LeerPoblacionProvincias(ruta_csv)
     
@@ -93,5 +88,6 @@ def R1():
         datos=datos,
         salida="./resultados/variacionProvincias.html"
     )
+
     print("Página HTML generada en './resultados/variacionProvincias.html'")
         
