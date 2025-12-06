@@ -41,7 +41,7 @@ def LeerPoblacionProvincias(ruta : str):
   return provincias,total, hombres_2017, mujeres_2017
 
 
-def GenerarHtml(titulo, cabecera, datos, salida):
+def GenerarHtml(titulo, cabecera, datos, salida, imagen = None):
     """
     Genera una tabla HTML con la variación absoluta y relativa de la población por provincias
 
@@ -81,6 +81,7 @@ def GenerarHtml(titulo, cabecera, datos, salida):
         paginaHTML += "</tr>"
         
     paginaHTML += "</table></body></html>"
+
     #print("Tabla HTML generada.")
     # Escritura en fichero
     with open(salida, "w", encoding="utf8") as archivo:

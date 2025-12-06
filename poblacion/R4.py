@@ -10,28 +10,7 @@ Fecha: 2025-12-06
 import numpy as np
 import funciones as func
 from R1 import CalcularVariacionAbsoluta, CalcularVariacionRelativa
-from R2 import AgruparProvinciasPorComunidadAutonoma, DatosComuniadesAutonomasProvincias
-
-
-def QuitarFilaTotales(provincias, poblacion_hombres, poblacion_mujeres):
-    """
-    Elimina la fila de 'Total Nacional' y concatena las poblaciones por sexo.
-    
-    Parámetros:
-        provincias (numpy.ndarray): Array con los nombres de las provincias
-        poblacion_hombres (numpy.ndarray): Array con la población de hombres
-        poblacion_mujeres (numpy.ndarray): Array con la población de mujeres
-    
-    Retorna:
-        tuple: (provincias sin total, tabla concatenada [hombres|mujeres])
-    """
-    provincias = provincias[1:]
-    
-    tabla = np.hstack((poblacion_hombres, poblacion_mujeres))
-    tabla = tabla[1:, :] 
-    
-    return provincias, tabla
-
+import R2 as r2
 
 def SepararPorSexos(sumas, num_anos):
     """
@@ -100,12 +79,11 @@ def R4():
     ruta_csv = "./entradas/poblacionProvinciasHM2010-17.csv"
     provincias, _, poblacion_hombres, poblacion_mujeres = func.LeerPoblacionProvincias(ruta_csv)
     
-    provincias, tabla = QuitarFilaTotales(provincias, poblacion_hombres, poblacion_mujeres)
+    provincias, tabla = r2.QuitarFilaTotales(provincias, None, poblacion_hombres, poblacion_mujeres)
     
-    diccionario_comunidades = DatosComuniadesAutonomasProvincias()
-    sumas = AgruparProvinciasPorComunidadAutonoma(provincias, tabla, diccionario_comunidades)
+    diccionario_comunidades = r2.DatosComuniadesAutonomasProvincias()
+    comunidades, sumas = r2.AgruparProvinciasPorComunidadAutonoma(provincias, tabla, diccionario_comunidades)
 
-    comunidades = np.array(list(diccionario_comunidades.keys()))
     num_anos = poblacion_hombres.shape[1]
 
     ccaa_hombres, ccaa_mujeres = SepararPorSexos(sumas, num_anos)
