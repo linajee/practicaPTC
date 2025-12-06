@@ -1,8 +1,8 @@
 import csv, numpy as np
 from bs4 import BeautifulSoup
 
-def LectorCsv(ruta, delimitador : str, ini : str, fin : str): 
 
+def LectorCsv(ruta, delimitador : str, ini : str, fin : str): 
   if len(delimitador) !=1:
     raise ValueError("El delimitador debe ser un solo caracter")
 
@@ -26,7 +26,6 @@ def LectorCsv(ruta, delimitador : str, ini : str, fin : str):
 
 
 def LeerPoblacionProvincias(ruta : str):
-
   datos = LectorCsv(
       ruta=ruta,
       delimitador=";",
@@ -75,7 +74,7 @@ def GenerarHtml(titulo, cabecera, datos, salida):
         
         for j in range(1,datos.shape[1]):
             valor = datos[i][j]
-            valor = formatear_numero(valor, 2)
+            valor = FormatearNumero(valor, 2)
 
             paginaHTML += f"<td>{valor}</td>"
             
@@ -90,7 +89,7 @@ def GenerarHtml(titulo, cabecera, datos, salida):
     archivo.close()
 
 
-def formatear_numero(numero, decimales=2):
+def FormatearNumero(numero, decimales=2):
     """
     Formatea un número al estilo español
 
@@ -113,7 +112,8 @@ def formatear_numero(numero, decimales=2):
       return s
     except:
       return numero
-    
+
+  
 def GenerarEstiloCss():
     """
     Genera el archivo CSS para la tabla.
