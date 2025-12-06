@@ -20,7 +20,7 @@ def GraficaBarrasPares(nombres, par1, par2):
 
     plt.legend()
     plt.tight_layout()
-    plt.savefig('./resultados/poblacion_por_sexo_ccaa.png')
+    plt.savefig('./imagenes/poblacion_por_sexo_ccaa.png')
 
 def AñadirImagenHtml(html_path, imagen_path, ancho=None, alto=None):
     """
@@ -88,8 +88,8 @@ def R3():
     GraficaBarrasPares(comunidades_sin_cod, hombres, mujeres)
 
     AñadirImagenHtml(
-        html_path="./resultados/comunidadesAutonomas.html",
-        imagen_path="./poblacion_por_sexo_ccaa.png",
+        html_path="./resultados/poblacionComAutonomas.html",
+        imagen_path="../imagenes/poblacion_por_sexo_ccaa.png",
         ancho=800,
         alto=600
     )

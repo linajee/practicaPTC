@@ -103,7 +103,7 @@ def R2():
       titulo="Poblacion total de las comunidades autónomas (2011-2017)",
       cabecera=cabecera,
       datos=tabla,
-      salida="./resultados/comunidadesAutonomas.html"
+      salida="./resultados/poblacionComAutonomas.html"
   )
-  print("Página HTML generada en './resultados/comunidadesAutonomas.html'")
+  print("Página HTML generada en './resultados/poblacionComAutonomas.html'")
 
