@@ -1,8 +1,29 @@
+"""
+R2.py
+Módulo que calcula la población total por comunidades autónomas,
+agrupando los datos de provincias y generando una página web con la tabla de resultados.
+
+Autores: Jose Daniel Ojeda Tro & Javier Linaje Vallejo
+Fecha: 2025-12-06
+"""
 import funciones as func
 import numpy as np
 
-def AgruparProvinciasPorComunidadAutonoma(provincias, poblaciones, diccionario_comunidades):
 
+def AgruparProvinciasPorComunidadAutonoma(provincias, poblaciones, diccionario_comunidades):
+    """
+    Agrupa los datos de población de provincias por comunidad autónoma.
+    
+    Parámetros:
+        provincias (numpy.ndarray): Array con los nombres de las provincias
+        poblaciones (numpy.ndarray): Matriz con datos de población de cada provincia
+        diccionario_comunidades (dict): Diccionario {comunidad: [provincias]}
+    
+    Retorna:
+        tuple: (comunidades, resultado) donde:
+            - comunidades: array con nombres de comunidades autónomas
+            - resultado: matriz con poblaciones agrupadas por comunidad
+    """
     resultado = np.zeros((len(diccionario_comunidades), poblaciones.shape[1]))
     
     for i, comunidad in enumerate(diccionario_comunidades): 
@@ -15,6 +36,15 @@ def AgruparProvinciasPorComunidadAutonoma(provincias, poblaciones, diccionario_c
             
 
 def DiccionarioComunidadProvincia(datos):
+    """
+    Crea un diccionario que mapea cada comunidad autónoma con sus provincias.
+    
+    Parámetros:
+        datos (list): Lista de strings alternando comunidad-provincia
+    
+    Retorna:
+        dict: Diccionario {comunidad: [lista de provincias]}
+    """
     comunidades_autonomas = {}
     i = 0
     
@@ -30,7 +60,19 @@ def DiccionarioComunidadProvincia(datos):
     
     return comunidades_autonomas
 
-def CrearCabecera(total, hombres, mujeres): 
+
+def CrearCabecera(total, hombres, mujeres):
+    """
+    Genera la cabecera HTML para la tabla de población por comunidades autónomas.
+    
+    Parámetros:
+        total (numpy.ndarray): Datos de población total
+        hombres (numpy.ndarray): Datos de población de hombres
+        mujeres (numpy.ndarray): Datos de población de mujeres
+    
+    Retorna:
+        str: Código HTML de la cabecera de la tabla
+    """
     cabecera = "<tr>"
     cabecera += '<th rowspan="2" style="width:100px;">CCAA</th>'
     cabecera += f'<th colspan="{total.shape[1]}" class="group-header">Total</th>'
@@ -46,7 +88,17 @@ def CrearCabecera(total, hombres, mujeres):
 
     return cabecera 
 
+
 def DatosComuniadesAutonomasProvincias():
+    """
+    Lee y procesa el archivo HTML para obtener la relación entre comunidades autónomas y provincias.
+    
+    Parámetros:
+        None
+    
+    Retorna:
+        dict: Diccionario con la estructura {comunidad: [provincias]}
+    """
     # Leer datos de la página web
     datos = func.LeerPaginaWeb('./entradas/comunidadAutonoma-Provincia.htm')
 
@@ -60,6 +112,18 @@ def DatosComuniadesAutonomasProvincias():
 
 
 def QuitarFilaTotales(provincias, total, poblacion_hombres, poblacion_mujeres):
+    """
+    Elimina la fila de totales (primera fila) de los datos de población.
+    
+    Parámetros:
+        provincias (numpy.ndarray): Array con nombres de provincias
+        total (numpy.ndarray): Datos de población total (puede ser None)
+        poblacion_hombres (numpy.ndarray): Datos de población de hombres (puede ser None)
+        poblacion_mujeres (numpy.ndarray): Datos de población de mujeres (puede ser None)
+    
+    Retorna:
+        tuple: (provincias_sin_total, tabla_concatenada)
+    """
     provincias = provincias[1:]
 
     arrays_a_concatenar = []
@@ -77,33 +141,58 @@ def QuitarFilaTotales(provincias, total, poblacion_hombres, poblacion_mujeres):
 
     return provincias, tabla
 
-def TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres):
 
+def TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres):
+    """
+    Genera una tabla con la población por comunidades autónomas.
+    
+    Parámetros:
+        provincias (numpy.ndarray): Array con nombres de provincias
+        total (numpy.ndarray): Datos de población total
+        p_hombres (numpy.ndarray): Datos de población de hombres
+        p_mujeres (numpy.ndarray): Datos de población de mujeres
+    
+    Retorna:
+        numpy.ndarray: Tabla con comunidades (columna 0) y datos de población
+    """
     diccionario_comunidades = DatosComuniadesAutonomasProvincias()
     provincias, tabla = QuitarFilaTotales(provincias, total, p_hombres, p_mujeres)
+    
     # Sumar poblaciones por comunidad autónoma
     comunidades, sumas = AgruparProvinciasPorComunidadAutonoma(provincias, tabla, diccionario_comunidades)
     
     tabla = np.column_stack((comunidades, sumas))
     return tabla
 
+
 def R2():
+    """
+    Función principal que ejecuta el módulo R2.
+    
+    Genera un archivo HTML con la población total por comunidades autónomas,
+    desagregada por sexo y años.
+    
+    Parámetros:
+        None
+    
+    Retorna:
+        None
+    """
+    func.GenerarEstiloCss()
 
-  func.GenerarEstiloCss()
-      # Leer datos de población 
-  provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
-  tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
-   # Crear cabecera HTML
-  cabecera = CrearCabecera(total, p_hombres, p_mujeres)
+    # Leer datos de población 
+    provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
+    tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
 
+    # Crear cabecera HTML
+    cabecera = CrearCabecera(total, p_hombres, p_mujeres)
 
+    func.GenerarHtml(
+        titulo="Poblacion total de las comunidades autónomas (2011-2017)",
+        cabecera=cabecera,
+        datos=tabla,
+        salida="./resultados/poblacionComAutonomas.html"
+    )
 
-
-  func.GenerarHtml(
-      titulo="Poblacion total de las comunidades autónomas (2011-2017)",
-      cabecera=cabecera,
-      datos=tabla,
-      salida="./resultados/poblacionComAutonomas.html"
-  )
-  print("Página HTML generada en './resultados/poblacionComAutonomas.html'")
+    print("Página HTML generada en './resultados/poblacionComAutonomas.html'")
 

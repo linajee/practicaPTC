@@ -12,6 +12,7 @@ import funciones as func
 from R1 import CalcularVariacionAbsoluta, CalcularVariacionRelativa
 import R2 as r2
 
+
 def SepararPorSexos(sumas, num_anos):
     """
     Separa la matriz de sumas agrupadas en Hombres y Mujeres.

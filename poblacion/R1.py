@@ -43,6 +43,16 @@ def CalcularVariacionRelativa(poblacion_total, variacion_absoluta):
 
 
 def CrearCabecera(variacion_absoluta, variacion_relativa):
+    """
+    Genera la cabecera HTML para la tabla de variaciones de población.
+    
+    Parámetros:
+        variacion_absoluta (numpy.ndarray): Array con la variación absoluta
+        variacion_relativa (numpy.ndarray): Array con la variación relativa
+    
+    Retorna:
+        str: Código HTML de la cabecera de la tabla
+    """
     cabecera = "<tr>"
     cabecera += '<th rowspan="2">Provincia</th>'
     cabecera += f'<th colspan="{variacion_absoluta.shape[1]}" class="group-header">Variación absoluta</th>'

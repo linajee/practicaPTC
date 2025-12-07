@@ -96,17 +96,23 @@ def FormatearNumero(numero, decimales=2):
 
     Parametros:
         numero (float): Número a formatear
-        decimales (int): Número de decimales
+        decimales (int): Número de decimales (se ignora si el número es entero)
 
     Retorna:
         str: Número formateado  
     """
   
     try:
-      # Formateamos primero con el estándar inglés (coma para miles, punto para decimales)
       numero = float(numero)
-      formato = f"{{:,.{decimales}f}}"
-      s = formato.format(numero)
+      
+      # Si el número es entero (o muy cercano a un entero), formatear sin decimales
+      if numero == int(numero) or abs(numero - round(numero)) < 0.001:
+          formato = "{:,.0f}"
+          s = formato.format(numero)
+      else:
+          # Caso contrario, usar los decimales especificados
+          formato = f"{{:,.{decimales}f}}"
+          s = formato.format(numero)
       
       # Reemplazamos temporalmente la coma por un marcador, el punto por coma, y el marcador por punto
       s = s.replace(",", "X").replace(".", ",").replace("X", ".")

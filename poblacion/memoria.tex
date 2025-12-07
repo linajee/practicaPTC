@@ -1,0 +1,77 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% Configuración de títulos más compacta
+\titleformat{\section}{\normalsize\bfseries}{\thesection}{0.5em}{}
+\titlespacing*{\section}{0pt}{0.5ex}{0.5ex}
+
+% Espaciado compacto
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3em}
+
+\begin{document}
+
+\begin{center}
+    \Large\textbf{Memoria de la Práctica: Población}\\[0.3em]
+    \normalsize Procesamiento de Tablas y Cuadros\\[0.5em]
+    \small
+    \textbf{Autores:} Jose Daniel Ojeda Tro y Javier Linaje Vallejo\\
+    \today
+\end{center}
+
+\vspace{0.3em}
+
+\section*{Respuestas a las Cuestiones}
+
+\begin{enumerate}[leftmargin=*,itemsep=0.4em,topsep=0.2em]
+    \item \textbf{¿Cuántos apartados de la práctica has resuelto?}
+    
+    Se han resuelto \textbf{los 5 apartados completos} (100\%): \textbf{R1} (variación por provincias), \textbf{R2} (población por CCAA), \textbf{R3} (gráfico de barras Top 10 CCAA), \textbf{R4} (variación por CCAA desagregada por sexos) y \textbf{R5} (gráfico de evolución temporal Top 10). Todos generan correctamente las salidas HTML y gráficos requeridos.
+    
+    \item \textbf{¿Has organizado tu código en funciones y diferentes scripts?}
+    
+    Sí. El código está modularizado en \textbf{24 funciones documentadas} distribuidas en 6 scripts: \texttt{funciones.py} (6 funciones comunes), \texttt{R1.py} (3 funciones), \texttt{R2.py} (7 funciones), \texttt{R3.py} (3 funciones), \texttt{R4.py} (3 funciones), \texttt{R5.py} (2 funciones) y \texttt{main.py} (orquestador). Se aplica el principio DRY reutilizando funciones entre módulos.
+    
+    \textbf{Arquitectura del sistema:}
+    
+    \begin{center}
+    \small
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{5}{|c|}{\textbf{main.py} (Orquestador)} \\
+    \hline
+    \textbf{R1.py} & \textbf{R2.py} & \textbf{R3.py} & \textbf{R4.py} & \textbf{R5.py} \\
+    Variación & Población & Gráfico & Variación & Gráfico \\
+    Provincias & CCAA & Barras & CCAA & Líneas \\
+    \hline
+    \multicolumn{5}{|c|}{$\uparrow$ Funciones compartidas $\uparrow$} \\
+    \multicolumn{5}{|c|}{\textbf{funciones.py} (CSV, HTML, Formato, Generación)} \\
+    \hline
+    \end{tabular}
+    
+    \vspace{0.3em}
+    \footnotesize
+    Dependencias: R3$\rightarrow$R2, R4$\rightarrow$R1, R5$\rightarrow$R3
+    \end{center}
+    
+    \item \textbf{¿Has utilizado el tipo de dato diccionario?}
+    
+    Sí. Se utilizan diccionarios en: (a) \texttt{R2.DiccionarioComunidadProvincia()} para mapeo comunidad-provincias (\texttt{\{comunidad: [provincias]\}}), y (b) \texttt{R3.R3()} para almacenar datos por comunidad y sexo (\texttt{\{comunidad: \{'Hombres': v, 'Mujeres': v\}\}}).
+    
+    \item \textbf{¿Has utilizado el tipo de dato numpy.array?}
+    
+    Sí. \texttt{numpy.array} se usa extensivamente para: almacenar datos del CSV, operaciones vectorizadas de variaciones, manipulación de matrices (\texttt{hstack}, \texttt{vstack}), agregaciones (\texttt{mean}, \texttt{argsort}) y transformaciones entre provincias y CCAA.
+    
+\end{enumerate}
+
+\vspace{0.2em}
+
+\section*{Conclusión}
+
+La práctica se ha completado satisfactoriamente: todos los apartados implementados, código estructurado y modularizado, uso apropiado de diccionarios y numpy arrays, y documentación completa con docstrings.
+
+\end{document}
