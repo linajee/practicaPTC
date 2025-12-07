@@ -41,8 +41,8 @@ def GraficoLineasEvolucion(nombres, datos_totales):
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     
-    plt.savefig('./imagenes/evolucion_poblacion_ccaa.png')
-    print("Gráfico guardado en './imagenes/evolucion_poblacion_ccaa.png'")
+    plt.savefig('./imagenes/R5.png')
+    print("Gráfico guardado en './imagenes/R5.png'")
 
 
 def R5():
@@ -75,7 +75,7 @@ def R5():
     # Insertar imagen en el HTML de R4
     AñadirImagenHtml(
         html_path="./resultados/variacionComAutonomas.html",
-        imagen_path="../imagenes/evolucion_poblacion_ccaa.png",
+        imagen_path="../imagenes/R5.png",
         ancho=1000,
         alto=600
     )

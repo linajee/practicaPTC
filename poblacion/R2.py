@@ -179,19 +179,19 @@ def R2():
     """
     func.GenerarEstiloCss()
 
-  # Leer datos de población 
-  provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
-  tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
+    # Leer datos de población 
+    provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
+    tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
 
-  # Crear cabecera HTML
-  cabecera = CrearCabecera(total, p_hombres, p_mujeres)
+    # Crear cabecera HTML
+    cabecera = CrearCabecera(total, p_hombres, p_mujeres)
 
-  func.GenerarHtml(
-      titulo="Poblacion total de las comunidades autónomas (2011-2017)",
-      cabecera=cabecera,
-      datos=tabla,
-      salida="./resultados/poblacionComAutonomas.html"
-  )
+    func.GenerarHtml(
+        titulo="Poblacion total de las comunidades autónomas (2011-2017)",
+        cabecera=cabecera,
+        datos=tabla,
+        salida="./resultados/poblacionComAutonomas.html"
+    )
 
-  print("Página HTML generada en './resultados/poblacionComAutonomas.html'")
+    print("Página HTML generada en './resultados/poblacionComAutonomas.html'")
 

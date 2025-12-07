@@ -36,7 +36,7 @@ def GraficaBarrasPares(nombres, par1, par2):
 
     plt.legend()
     plt.tight_layout()
-    plt.savefig('./imagenes/poblacion_por_sexo_ccaa.png')
+    plt.savefig('./imagenes/R3.png')
 
 
 def AñadirImagenHtml(html_path, imagen_path, ancho=None, alto=None):
@@ -136,7 +136,7 @@ def R3():
 
     AñadirImagenHtml(
         html_path="./resultados/poblacionComAutonomas.html",
-        imagen_path="../imagenes/poblacion_por_sexo_ccaa.png",
+        imagen_path="../imagenes/R3.png",
         ancho=800,
         alto=600
     )

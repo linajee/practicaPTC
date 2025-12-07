@@ -12,7 +12,6 @@ Este script ejecuta secuencialmente:
 Autores: Jose Daniel Ojeda Tro & Javier Linaje Vallejo
 Fecha: 2025-12-07
 """
-from funciones import LeerPoblacionProvincias
 import R1 as r1
 import R2 as r2
 import R3 as r3
