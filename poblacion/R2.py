@@ -2,7 +2,6 @@ import funciones as func
 import numpy as np
 
 def AgruparProvinciasPorComunidadAutonoma(provincias, poblaciones, diccionario_comunidades):
-
     resultado = np.zeros((len(diccionario_comunidades), poblaciones.shape[1]))
     
     for i, comunidad in enumerate(diccionario_comunidades): 
@@ -30,6 +29,7 @@ def DiccionarioComunidadProvincia(datos):
     
     return comunidades_autonomas
 
+
 def CrearCabecera(total, hombres, mujeres): 
     cabecera = "<tr>"
     cabecera += '<th rowspan="2" style="width:100px;">CCAA</th>'
@@ -45,6 +45,7 @@ def CrearCabecera(total, hombres, mujeres):
     cabecera += "</tr>"
 
     return cabecera 
+
 
 def DatosComuniadesAutonomasProvincias():
     # Leer datos de la página web
@@ -77,27 +78,27 @@ def QuitarFilaTotales(provincias, total, poblacion_hombres, poblacion_mujeres):
 
     return provincias, tabla
 
-def TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres):
 
+def TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres):
     diccionario_comunidades = DatosComuniadesAutonomasProvincias()
     provincias, tabla = QuitarFilaTotales(provincias, total, p_hombres, p_mujeres)
+    
     # Sumar poblaciones por comunidad autónoma
     comunidades, sumas = AgruparProvinciasPorComunidadAutonoma(provincias, tabla, diccionario_comunidades)
     
     tabla = np.column_stack((comunidades, sumas))
     return tabla
 
-def R2():
 
+def R2():
   func.GenerarEstiloCss()
-      # Leer datos de población 
+
+  # Leer datos de población 
   provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
   tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
-   # Crear cabecera HTML
+
+  # Crear cabecera HTML
   cabecera = CrearCabecera(total, p_hombres, p_mujeres)
-
-
-
 
   func.GenerarHtml(
       titulo="Poblacion total de las comunidades autónomas (2011-2017)",
@@ -105,5 +106,6 @@ def R2():
       datos=tabla,
       salida="./resultados/poblacionComAutonomas.html"
   )
+
   print("Página HTML generada en './resultados/poblacionComAutonomas.html'")
 
