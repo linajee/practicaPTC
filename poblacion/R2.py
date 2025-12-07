@@ -178,7 +178,6 @@ def R2():
     Retorna:
         None
     """
-    func.GenerarEstiloCss()
 
     # Leer datos de población 
     provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')

@@ -120,50 +120,6 @@ def FormatearNumero(numero, decimales=2):
     except:
       return numero
 
-  
-def GenerarEstiloCss():
-    """
-    Genera el archivo CSS para la tabla.
-    
-    Parametros:
-        None
-    
-    Retorna:
-        None
-    """
-    contenido_css = """
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        font-family: Arial, Helvetica, sans-serif;
-
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-        font-size: 12px;
-    }
-    th {
-        background-color: #ffffff;
-        font-weight: bold;
-    }
-    /* Estilo para las cabeceras agrupadas */
-    th.group-header {
-        background-color: #f2f2f2;
-    }
-    table th:first-child,
-    table td:first-child {
-        text-align: center;
-        width: 100px;
-        white-space: nowrap;
-    }
-    """
-    with open("./resultados/estilo.css", "w", encoding="utf8") as f:
-        f.write(contenido_css)
-
-
 def LeerPaginaWeb(fichero):      
     archivo = open(fichero, 'r', encoding="utf8")
     comString = archivo.read()

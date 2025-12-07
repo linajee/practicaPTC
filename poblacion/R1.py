@@ -80,7 +80,6 @@ def R1():
     Retorna:
         None
     """
-    func.GenerarEstiloCss()
     
     ruta_csv = "./entradas/poblacionProvinciasHM2010-17.csv"
     provincias, poblacion_total, _ , _ = func.LeerPoblacionProvincias(ruta_csv)
