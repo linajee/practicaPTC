@@ -1,3 +1,12 @@
+"""
+R3.py
+Módulo que genera un gráfico de barras comparando población por sexo
+de las 10 comunidades autónomas con mayor población media e inserta
+el gráfico en el HTML de población por comunidades.
+
+Autores: Jose Daniel Ojeda Tro & Javier Linaje Vallejo
+Fecha: 2025-12-07
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 import funciones as func
@@ -6,7 +15,14 @@ from R2 import TablaPoblacionMediaCCAA
 def GraficaBarrasPares(nombres, par1, par2):
     """
     Genera una gráfica de barras que muestra la población por sexo en las CCAA para el año 2017.
-    La gráfica se guarda en un archivo PNG.
+    
+    Parámetros:
+        nombres (list): Lista con los nombres de las comunidades autónomas
+        par1 (list): Población de hombres por comunidad
+        par2 (list): Población de mujeres por comunidad
+    
+    Retorna:
+        None (guarda el gráfico en ./imagenes/poblacion_por_sexo_ccaa.png)
     """
     plt.figure("lineal")
     plt.title("Polación por sexo en el año 2017 (CCAA)")
@@ -85,13 +101,16 @@ def ObtenerTopCCAA(tabla, n=10):
 
 def R3():
     """
-    Función principal que ejecuta el módulo R4
+    Función principal que ejecuta el módulo R3.
+    
+    Genera un gráfico de barras comparando la población por sexo de las 10 CCAA
+    con mayor población media en 2017 y lo inserta en el HTML de R2.
 
     Parámetros:
-        Ninguno
+        None
 
     Retorna:
-        Ninguno
+        None
     """
     provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
     tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
