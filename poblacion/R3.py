@@ -115,13 +115,6 @@ def R3():
     provincias, total, p_hombres, p_mujeres = func.LeerPoblacionProvincias('./entradas/poblacionProvinciasHM2010-17.csv')
     tabla = TablaPoblacionMediaCCAA(provincias, total, p_hombres, p_mujeres)
 
-    # CÓDIGO ORIGINAL DEL COMPAÑERO (comentado para comparación de resultados):
-    # #Calcular las 10 CCAA con mayor población media
-    # medias = np.mean(tabla[:, 1:9].astype(float), axis=1)
-    # orden = np.argsort(medias)[-10:][::-1]
-    # tabla = tabla[orden]
-
-    # NUEVA IMPLEMENTACIÓN (usando función reutilizable para R5):
     tabla = ObtenerTopCCAA(tabla, n=10)
 
     # Quitamos los codigos de las comunidades autónomas

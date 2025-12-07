@@ -9,6 +9,7 @@ Fecha: 2025-12-06
 import funciones as func
 import numpy as np
 
+
 def AgruparProvinciasPorComunidadAutonoma(provincias, poblaciones, diccionario_comunidades):
     """
     Agrupa los datos de población de provincias por comunidad autónoma.
