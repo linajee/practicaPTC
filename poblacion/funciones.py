@@ -3,6 +3,21 @@ from bs4 import BeautifulSoup
 
 
 def LectorCsv(ruta, delimitador : str, ini : str, fin : str): 
+  """
+  Lee un fichero CSV y devuelve únicamente las filas comprendidas entre dos marcadores.
+
+  Parámetros:
+      ruta (str): Ruta del archivo CSV.
+      delimitador (str): Carácter usado como delimitador en el CSV. Debe tener longitud 1.
+      ini (str): Cadena que indica el inicio del bloque de datos a extraer.
+      fin (str): Cadena que indica el final del bloque de datos a extraer.
+
+  Retorna:
+      numpy.ndarray: Matriz con las filas seleccionadas del archivo CSV.
+
+  Excepciones:
+      ValueError: Si el delimitador tiene una longitud distinta de 1.
+  """
   if len(delimitador) !=1:
     raise ValueError("El delimitador debe ser un solo caracter")
 
@@ -26,6 +41,20 @@ def LectorCsv(ruta, delimitador : str, ini : str, fin : str):
 
 
 def LeerPoblacionProvincias(ruta : str):
+
+  """
+  Lee los datos de población por provincias desde un CSV y los organiza en matrices NumPy.
+
+  Parámetros:
+      ruta (str): Ruta del archivo CSV con los datos de población.
+
+  Retorna:
+      tuple:
+          provincias (numpy.ndarray): Nombres de las provincias.
+          total (numpy.ndarray): Población total por años (float).
+          hombres_2017 (numpy.ndarray): Datos de población masculina.
+          mujeres_2017 (numpy.ndarray): Datos de población femenina.
+  """
   datos = LectorCsv(
       ruta=ruta,
       delimitador=";",
@@ -120,7 +149,22 @@ def FormatearNumero(numero, decimales=2):
     except:
       return numero
 
-def LeerPaginaWeb(fichero):      
+def LeerPaginaWeb(fichero):   
+    """
+    Lee un archivo HTML desde disco y extrae el texto contenido en todas las etiquetas <td>.
+
+    Parámetros:
+        fichero (str): Ruta del archivo HTML que se va a procesar.
+
+    Funcionamiento:
+        - Abre y lee el archivo HTML completo como cadena.
+        - Usa BeautifulSoup para parsear su estructura.
+        - Busca todas las etiquetas <td> de la página.
+        - Extrae el texto interior de cada una.
+
+    Retorna:
+        list[str]: Lista con los textos contenidos en cada celda <td>.
+    """   
     archivo = open(fichero, 'r', encoding="utf8")
     comString = archivo.read()
     archivo.close()
